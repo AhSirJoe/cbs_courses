@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBS Course Guide - Columbia Business School</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #1f2937;
+        }
+
+        /* Navigation */
+        nav {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .nav-logo {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 200ms;
+        }
+
+        .nav-links a:hover {
+            color: #1e3a8a;
+        }
+
+        .nav-links a.active {
+            color: #1e3a8a;
+            border-bottom: 2px solid #1e3a8a;
+            padding-bottom: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 24px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 56px;
+            font-weight: 700;
+            margin-bottom: 24px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 20px;
+            opacity: 0.95;
+            margin-bottom: 48px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Search Bar */
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto 48px;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 24px;
+            font-size: 18px;
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-input:focus {
+            outline: 3px solid #60a5fa;
+        }
+
+        /* Quick Access Buttons */
+        .quick-access {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .quick-btn {
+            background: white;
+            padding: 32px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #1f2937;
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .quick-btn:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .quick-btn-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .quick-btn-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .quick-btn-desc {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: white;
+            padding: 80px 24px;
+        }
+
+        .stats-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 48px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 48px;
+            font-weight: 700;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 16px;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        /* Top Rated Section */
+        .top-rated {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 24px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 48px;
+            color: white;
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        /* Course Cards */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+        }
+
+        .course-code {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .course-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1f2937;
+        }
+
+        .course-prof {
+            font-size: 14px;
+            color: #6b7280;
+            margin-bottom: 16px;
+        }
+
+        .rating-display {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .stars {
+            color: #f59e0b;
+            font-size: 18px;
+        }
+
+        .rating-value {
+            font-weight: 600;
+            color: #1f2937;
+        }
+
+        .percentile {
+            font-size: 12px;
+            color: #059669;
+            background: #d1fae5;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            background: #1f2937;
+            color: white;
+            padding: 48px 24px;
+            margin-top: 80px;
+        }
+
+        .footer-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .footer-text {
+            opacity: 0.8;
+            font-size: 14px;
+        }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 36px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .quick-access {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                gap: 32px;
+            }
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            color: white;
+            padding: 40px;
+            font-size: 18px;
+        }
+
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 24px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">CBS Course Guide</a>
+            <ul class="nav-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="browse-courses.html">Browse Courses</a></li>
+                <li><a href="browse-professors.html">Professors</a></li>
+                <li><a href="spring2026.html">Spring 2026</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Find Your Perfect Course</h1>
+        <p>Discover top-rated courses and professors at Columbia Business School with real student ratings</p>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    placeholder="Search courses, professors, or topics..."
+                    id="searchInput"
+                >
+            </div>
+        </div>
+
+        <!-- Quick Access Buttons -->
+        <div class="quick-access">
+            <a href="browse-courses.html" class="quick-btn">
+                <div class="quick-btn-icon">📚</div>
+                <div class="quick-btn-title">Browse Courses</div>
+                <div class="quick-btn-desc">1,749 courses with ratings</div>
+            </a>
+            <a href="browse-professors.html" class="quick-btn">
+                <div class="quick-btn-icon">👨‍🏫</div>
+                <div class="quick-btn-title">Find Professors</div>
+                <div class="quick-btn-desc">296 faculty profiles</div>
+            </a>
+            <a href="spring2026.html" class="quick-btn">
+                <div class="quick-btn-icon">🗓️</div>
+                <div class="quick-btn-title">Spring 2026</div>
+                <div class="quick-btn-desc">374 sections available</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number" id="courseCount">-</div>
+                    <div class="stat-label">Total Courses</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="profCount">-</div>
+                    <div class="stat-label">Professors</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="spring2026Count">-</div>
+                    <div class="stat-label">Spring 2026 Sections</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="ratedCount">-</div>
+                    <div class="stat-label">With Ratings</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Rated Courses -->
+    <section class="top-rated">
+        <div class="section-header">
+            <h2 class="section-title">🏆 Top Rated Courses</h2>
+            <p class="section-subtitle">Highest rated course-professor combinations</p>
+        </div>
+        <div class="cards-grid" id="topCoursesGrid">
+            <div class="loading">Loading top courses...</div>
+        </div>
+    </section>
+
+    <!-- Top Professors -->
+    <section class="top-rated">
+        <div class="section-header">
+            <h2 class="section-title">⭐ Popular Professors</h2>
+            <p class="section-subtitle">Top-rated faculty across all courses</p>
+        </div>
+        <div class="cards-grid" id="topProfsGrid">
+            <div class="loading">Loading professors...</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <p class="footer-text">CBS Course Guide • Built for Columbia Business School Students</p>
+            <p class="footer-text" style="margin-top: 8px; font-size: 12px;">
+                Data updated from Course Match and student evaluations • Not affiliated with CBS administration
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Load metadata and display stats
+        async function loadStats() {
+            try {
+                const response = await fetch('src/data/metadata.json');
+                const data = await response.json();
+                
+                document.getElementById('courseCount').textContent = data.counts?.courses || '1,749';
+                document.getElementById('profCount').textContent = data.counts?.professors || '296';
+                document.getElementById('spring2026Count').textContent = data.counts?.spring_2026_sections || '374';
+                document.getElementById('ratedCount').textContent = '193';
+            } catch (error) {
+                console.error('Error loading stats:', error);
+                // Fallback to default values
+                document.getElementById('courseCount').textContent = '1,749';
+                document.getElementById('profCount').textContent = '296';
+                document.getElementById('spring2026Count').textContent = '374';
+                document.getElementById('ratedCount').textContent = '193';
+            }
+        }
+
+        // Load top courses
+        async function loadTopCourses() {
+            const grid = document.getElementById('topCoursesGrid');
+            try {
+                const response = await fetch('src/data/top_combinations.json');
+                const courses = await response.json();
+                
+                const top8 = courses.slice(0, 8);
+                
+                grid.innerHTML = top8.map(course => {
+                    const stars = getStars(course.overall_percentile || 0);
+                    const rating = course.overall_rating || course.combo_rating || 0;
+                    return `
+                        <div class="course-card" onclick="window.location.href='spring2026.html?course=${course.course_code}'">
+                            <div class="course-code">${course.course_code}</div>
+                            <div class="course-title">${course.course_title}</div>
+                            <div class="course-prof">👨‍🏫 ${course.professor}</div>
+                            <div class="rating-display">
+                                <span class="stars">${stars}</span>
+                                <span class="rating-value">${rating.toFixed(1)}</span>
+                            </div>
+                            <div class="percentile">Top ${(course.overall_percentile || 0).toFixed(1)}%</div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                grid.innerHTML = '<div class="error">Unable to load courses. Please refresh.</div>';
+                console.error('Error loading courses:', error);
+            }
+        }
+
+        // Load top professors
+        async function loadTopProfessors() {
+            const grid = document.getElementById('topProfsGrid');
+            try {
+                const response = await fetch('src/data/top_professors.json');
+                const profs = await response.json();
+                
+                const top8 = profs.slice(0, 8);
+                
+                grid.innerHTML = top8.map(prof => {
+                    const stars = getStars(prof.prof_percentile || prof.percentile || 0);
+                    const rating = prof.prof_rating || prof.rating || 0;
+                    return `
+                        <div class="course-card" onclick="window.location.href='browse-professors.html?prof=${encodeURIComponent(prof.name)}'">
+                            <div class="course-code">👨‍🏫 Professor</div>
+                            <div class="course-title">${prof.name}</div>
+                            <div class="course-prof">${prof.division || 'Columbia Business School'}</div>
+                            <div class="rating-display">
+                                <span class="stars">${stars}</span>
+                                <span class="rating-value">${rating.toFixed(1)}</span>
+                            </div>
+                            <div class="percentile">Top ${(prof.prof_percentile || prof.percentile || 0).toFixed(1)}%</div>
+                        </div>
+                    `;
+                }).join('');
+            } catch (error) {
+                grid.innerHTML = '<div class="error">Unable to load professors. Please refresh.</div>';
+                console.error('Error loading professors:', error);
+            }
+        }
+
+        // Convert percentile to stars (5 star = top 15%, 4 star = top 30%, etc)
+        function getStars(percentile) {
+            if (percentile <= 15) return '⭐⭐⭐⭐⭐';
+            if (percentile <= 30) return '⭐⭐⭐⭐';
+            if (percentile <= 70) return '⭐⭐⭐';
+            if (percentile <= 85) return '⭐⭐';
+            return '⭐';
+        }
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const query = e.target.value;
+                window.location.href = `browse-courses.html?q=${encodeURIComponent(query)}`;
+            }
+        });
+
+        // Initialize
+        loadStats();
+        loadTopCourses();
+        loadTopProfessors();
+    </script>
+</body>
+</html>
