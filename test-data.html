@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBS Data Test</title>
+    <style>
+        body {
+            font-family: monospace;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #0f0;
+        }
+        .test { margin: 20px 0; padding: 10px; border: 1px solid #333; }
+        .pass { background: #002200; }
+        .fail { background: #220000; color: #f00; }
+        pre { background: #000; padding: 10px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔍 CBS Course Guide - Data Loading Test</h1>
+    <div id="results"></div>
+
+    <script>
+        const results = document.getElementById('results');
+        
+        async function testFile(path, name) {
+            const div = document.createElement('div');
+            div.className = 'test';
+            
+            try {
+                console.log(`Testing: ${path}`);
+                const response = await fetch(path);
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const data = await response.json();
+                const itemCount = Array.isArray(data) ? data.length : Object.keys(data).length;
+                
+                div.className = 'test pass';
+                div.innerHTML = `
+                    ✅ <strong>${name}</strong><br>
+                    Status: ${response.status} OK<br>
+                    Items: ${itemCount}<br>
+                    Size: ${(JSON.stringify(data).length / 1024).toFixed(1)} KB
+                `;
+                
+                if (itemCount > 0) {
+                    const preview = document.createElement('pre');
+                    preview.textContent = 'First item: ' + JSON.stringify(
+                        Array.isArray(data) ? data[0] : data, 
+                        null, 
+                        2
+                    ).substring(0, 500) + '...';
+                    div.appendChild(preview);
+                }
+            } catch (error) {
+                div.className = 'test fail';
+                div.innerHTML = `
+                    ❌ <strong>${name}</strong><br>
+                    Error: ${error.message}<br>
+                    Path: ${path}
+                `;
+            }
+            
+            results.appendChild(div);
+        }
+
+        async function runTests() {
+            const tests = [
+                ['src/data/metadata.json', 'Metadata'],
+                ['src/data/courses.json', 'Courses'],
+                ['src/data/professors.json', 'Professors'],
+                ['src/data/spring2026_combinations.json', 'Spring 2026'],
+                ['src/data/top_courses.json', 'Top Courses'],
+                ['src/data/top_professors.json', 'Top Professors'],
+                ['src/data/top_combinations.json', 'Top Combinations']
+            ];
+
+            results.innerHTML = '<div class="test"><strong>Testing data files...</strong></div>';
+            
+            for (const [path, name] of tests) {
+                await testFile(path, name);
+            }
+            
+            const summary = document.createElement('div');
+            summary.className = 'test';
+            summary.innerHTML = '<h2>Test Complete!</h2><p>If all tests pass ✅, your site should work correctly.</p>';
+            results.appendChild(summary);
+        }
+
+        runTests();
+    </script>
+</body>
+</html>
